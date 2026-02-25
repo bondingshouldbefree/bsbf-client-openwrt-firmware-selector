@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>OpenWrt Firmware Selector</title>
+    <title>BSBF Firmware Selector</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="index.css" />
     <script src="config.js"></script>
@@ -14,8 +14,8 @@
     <!-- header across the whole page -->
     <header>
       <div>
-        <a href="https://openwrt.org">
-          <img src="logo.svg" width="180" alt="Logo" />
+        <a href="https://bondingshouldbefree.com">
+          <img src="logo.png" width="180" alt="Logo" />
         </a>
         <div style="flex-grow: 1"></div>
         <div>
@@ -80,10 +80,9 @@
 
     <div class="container">
       <div>
-        <h2 class="tr-load">Download OpenWrt Firmware for your Device</h2>
+        <h2 class="tr-load">Download OpenWrt firmware with the BSBF bonding solution client for your device</h2>
         <p class="tr-message">
-          Type the name or model of your device, then select a stable build or
-          the nightly "snapshot" build.
+          Type the name or model of your device.
         </p>
 
         <!-- Model name and Build dropdown -->
@@ -135,12 +134,7 @@
               </div>
             </div>
             <div class="row">
-              <details id="asu" class="hide" style="width: 100%">
-                <summary>
-                  <span class="tr-customize"
-                    >Customize installed packages and/or first boot script</span
-                  >
-                </summary>
+              <div id="asu" style="width: 100%">
                 <div id="asu-buildstatus" class="hide">
                   <span></span>
                   <div id="asu-log" class="hide">
@@ -159,6 +153,40 @@
                   </div>
                 </div>
                 <div>
+                  <div class="tr-server-ipv4">Server IPv4 address</div>
+                  <textarea
+                    rows="1"
+                    id="asu-server-ipv4"
+                    autocomplete="off"
+                    spellcheck="false"
+                    autocapitalize="off"
+                  ></textarea>
+                </div>
+                <div>
+                  <div class="tr-server-port">Server port number</div>
+                  <textarea
+                    rows="1"
+                    id="asu-server-port"
+                    autocomplete="off"
+                    spellcheck="false"
+                    autocapitalize="off"
+                  ></textarea>
+                </div>
+                <div>
+                  <div class="tr-uuid">UUID</div>
+                  <textarea
+                    rows="1"
+                    id="asu-uuid"
+                    autocomplete="off"
+                    spellcheck="false"
+                    autocapitalize="off"
+                  ></textarea>
+                </div><br>
+                <a href="#" id="bsbf-add-client" class="custom-link">
+                  <span></span
+                  ><span class="tr-request-credentials">REQUEST CREDENTIALS</span>
+                </a><br><br>
+                <details><summary>Optional Sections</summary>
                   <h4 class="tr-packages">Installed Packages</h4>
                   <textarea
                     rows="10"
@@ -167,28 +195,27 @@
                     spellcheck="false"
                     autocapitalize="off"
                   ></textarea>
-                </div>
-                <h4 class="tr-defaults">
-                  Script to run on first boot (uci-defaults)
-                </h4>
-                <div id="uci-defaults-group">
-                  <textarea
-                    rows="10"
-                    id="uci-defaults-content"
-                    autocomplete="off"
-                    spellcheck="false"
-                    autocapitalize="off"
-                  ></textarea>
-                  <span
-                    id="uci-defaults-template"
-                    data-link="uci-defaults/setup.sh"
-                  ></span>
-                </div>
+                  <h4 class="tr-defaults">Script to run on first boot after the BSBF script (uci-defaults)</h4>
+                  <div id="uci-defaults-group">
+                    <textarea
+                      rows="10"
+                      id="uci-defaults-content"
+                      autocomplete="off"
+                      spellcheck="false"
+                      autocapitalize="off"
+                    ></textarea>
+                    <span
+                      id="uci-defaults-template"
+                      data-link="uci-defaults/setup.sh"
+                    ></span>
+                  </div>
+                </details>
+                <br>
                 <a href="#" id="asu-request-build" class="custom-link">
                   <span></span
                   ><span class="tr-request-build">REQUEST BUILD</span>
                 </a>
-              </details>
+              </div>
             </div>
           </div>
 
@@ -208,22 +235,8 @@
 
         <div id="footer">
           <span
-            ><a href="https://downloads.openwrt.org" class="tr-server-link"
-              >All Downloads</a
-            ></span
-          >
-          |
-          <span
-            ><a
-              href="https://forum.openwrt.org/t/the-openwrt-firmware-selector/81721"
-              class="tr-feedback-link"
-              >Feedback</a
-            ></span
-          >
-          |
-          <span
-            ><a href="https://github.com/openwrt/firmware-selector-openwrt-org/"
-              >OFS <span id="ofs-version">0.0.0</span></a
+            ><a href="https://github.com/bondingshouldbefree/bsbf-client-openwrt-firmware-selector/"
+              >BSBF OFS Source Code</a
             ></span
           >
         </div>

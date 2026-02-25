@@ -14,7 +14,6 @@ import {
 let currentDevice = {};
 let urlParams;
 let customDevicePackages = {};
-const ofsVersion = "%GIT_VERSION%";
 const progress = {
   "tr-init": 5,
   "tr-queued": 10,
@@ -45,14 +44,30 @@ function updateImagesBound(version, mobj) {
 const buildAsuRequest = createAsuRequestBuilder({
   config,
   progress,
-  ofsVersion,
   getCurrentDevice: () => currentDevice,
   updateImages: updateImagesBound,
 });
 
+let addClientPending = false;
+
+function bsbfAddClient() {
+  if (addClientPending) return;
+  addClientPending = true;
+
+  fetch(`${config.bsbf_add_client_url}`)
+    .then((response) => response.text())
+    .then((text) => {
+      const words = text.trim().split(/\s+/);
+      document.getElementById("asu-server-ipv4").value = words[0];
+      document.getElementById("asu-server-port").value = words[1];
+      document.getElementById("asu-uuid").value = words[2];
+    })
+    .catch((err) => { throw new Error(err.message); })
+    .finally(() => (addClientPending = false));
+}
+
 async function init() {
   urlParams = new URLSearchParams(window.location.search);
-  $("#ofs-version").innerText = ofsVersion;
 
   if (typeof config.asu_url !== "undefined") {
     show("#asu");
@@ -167,6 +182,14 @@ async function init() {
     asuButton.addEventListener("click", (e) => {
       e.preventDefault();
       buildAsuRequest();
+    });
+  }
+
+  const bsbfAddClientButton = $("#bsbf-add-client");
+  if (bsbfAddClientButton) {
+    bsbfAddClientButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      bsbfAddClient();
     });
   }
 }

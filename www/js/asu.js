@@ -2,7 +2,7 @@ import { $, $$, hide, show, split } from "./utils.js";
 import { translate } from "./translation.js";
 
 export function createAsuRequestBuilder(context) {
-  const { config, progress, ofsVersion, getCurrentDevice, updateImages } =
+  const { config, progress, getCurrentDevice, updateImages } =
     context;
 
   function getOpenwrtBranch(openwrtVersion) {
@@ -75,17 +75,36 @@ export function createAsuRequestBuilder(context) {
       return;
     }
 
+    /* Generate BSBF uci-defaults. */
+    var defaultsParam = "";
+    if (!requestHash) {
+      const server_ipv4 = $("#asu-server-ipv4").value.trim();
+      const server_port = $("#asu-server-port").value.trim();
+      const uuid = $("#asu-uuid").value.trim();
+      if (!server_ipv4 || !server_port || !uuid) {
+        showStatus("Please provide server_ipv4, server_port, and uuid.", false, "error");
+        return;
+      }
+      defaultsParam =
+        "# Configure bsbf-bonding.\n" +
+        "mkdir -p /etc/bsbf\n" +
+        "cat <<EOF > /etc/bsbf/bsbf-bonding.conf\n" +
+        `server_ipv4=${server_ipv4}\n` +
+        `server_port=${server_port}\n` +
+        `uuid=${uuid}\n` +
+        "EOF\n";
+    }
+
     const selectedVersion = $("#versions").value;
     const reposMode = config.asu_repositories_mode;
     const buildBody = {
       profile: currentDevice.id,
       target: currentDevice.target,
       packages: split($("#asu-packages").value),
-      defaults: $("#uci-defaults-content").value,
+      defaults: defaultsParam.concat($("#uci-defaults-content").value),
       version_code: $("#image-code").innerText,
       version: selectedVersion,
       diff_packages: true,
-      client: "ofs/" + ofsVersion,
       repositories: resolveAsuRepositories(
         config.asu_repositories,
         currentDevice,
