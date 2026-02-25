@@ -21,11 +21,11 @@ html {
     padding-left: 0.2em !important;
   }
 
-  #downloads1 {
+  #downloads1:not(.hide) {
     display: none !important;
   }
 
-  #downloads2 {
+  #downloads2:not(.hide) {
     display: block !important;
   }
 }
@@ -353,6 +353,9 @@ header > div {
   overflow: scroll;
 }
 
+#asu-server-ipv4,
+#asu-server-port,
+#asu-uuid,
 #asu-packages,
 #uci-defaults-content,
 #uci-defaults-group {

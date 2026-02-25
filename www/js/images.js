@@ -173,7 +173,11 @@ export function updateImages(version, mobj, context) {
   if (mobj) {
     if ("asu_image_url" in mobj) {
       mobj.image_folder = mobj.asu_image_url;
+      show("#downloads1");
+      show("#downloads2");
     } else {
+      hide("#downloads1");
+      hide("#downloads2");
       const baseUrl = config.image_urls[version];
       mobj.image_folder = `${baseUrl}/targets/${mobj.target}`;
     }
@@ -252,7 +256,6 @@ export function updateImages(version, mobj, context) {
     }
 
     if ("manifest" in mobj === false) {
-      $("#asu").open = false;
       hide("#asu-log");
       hide("#asu-buildstatus");
       $("#asu-packages").value = buildAsuPackages(
