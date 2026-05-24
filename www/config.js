@@ -29,5 +29,5 @@ var config = {
   // ],
 
   /* bsbf-add-client API URL */
-  bsbf_add_client_url: "https://api.bondingshouldbefree.org/bsbf-add-client",
+  bsbf_add_client_url: "https://api.bondingshouldbefree.org/bsbf-add-client-test2",
 };
